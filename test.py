@@ -8,6 +8,8 @@ import multiprocessing, time
 import numpy as np
 import air
 import math
+import os
+import time
 
 current_milli_time = lambda: int(round(time.time() * 1000))
 
@@ -200,4 +202,13 @@ if __name__ == "__main__":
             #             master.mav.command_ack_send(msg['command'],4)
             #             print("acknowledge sent.")
             # except:
-            #     pass
+            #    pass
+            
+now = datetime.now()
+date_time = now.strftime('%y-%m-%d_%H:%M:%S')
+os.chdir('/home/pi/Navio2/MyPython/')
+f_raw_sensor = open('log_' + date_time + '_raw_sensors.csv', 'w+')
+est_log_string = 'rcin_0, rcin_1, rcin_2, rcin_3, rcin_4, rcin_5, servo_0, servo_1, servo_2, servo_3, servo_4, servo_5, ax, ay, az, gyro_p, gyro_q, gyro_r, mag_x, mag_y, mag_z, pres_baro, gps_posn_n, gps_posn_e, gps_posn_d, gps_vel_n, gps_vel_e, gps_vel_d\n'
+f_raw_sensor.write(est_log_string)
+f_raw_sensor.write(', '.join(map(str, servo)) + ', '.join(map(str, y)) + '\n')
+            
